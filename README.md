@@ -1,226 +1,206 @@
-# 🎯 AI Aimbot
+# AI-Aimbot
 
-KI-gestütztes Auto-Aiming System mit YOLO v8 Objekterkennung für FPS Games.
+# AI-Powered Auto-Aiming System with YOLO v8 Object Detection for FPS Games
 
-## 🚀 Schneller Start
+## 🚀 Quick Start
 
 ```bash
-# 1. Dependencies installieren (einmalig)
+# 1. Install dependencies (one-time)
 pip install -r requirements.txt
 
-# 2. Programm starten
+# 2. Launch the program
 python launcher.py
 
-# 3. Hotkey zum Aktivieren/Deaktivieren
+# 3. Hotkey to enable/disable
 F6 = Toggle Tracking
 ```
 
-## 📁 Ordnerstruktur
+## 📁 Folder Structure
 
 ```
 .
-├── launcher.py                 # 🎮 Start-Menü (HIER STARTEN!)
-├── main.py                     # 💻 CLI Hauptprogramm
-├── gui_main.py                 # 🎨 GUI Alternative
-├── config.py                   # ⚙️ Konfigurationsoptionen
-├── config_presets.py           # 📋 Vorgefertigte Konfigurationen
-├── requirements.txt            # 📦 Python Dependencies
+├── launcher.py                 # 🎮 Start menu (START HERE!)
+├── main.py                     # 💻 CLI main program
+├── gui_main.py                 # 🎨 GUI alternative
+├── config.py                   # ⚙️ Configuration options
+├── config_presets.py           # 📋 Preset configurations
+├── requirements.txt            # 📦 Python dependencies
 │
-├── core/                       # 🧠 Kern-Module
-│   ├── capture.py              # 📸 Screen Capture (dxcam)
-│   ├── detector.py             # 🤖 YOLO Objekterkennung
-│   ├── selector.py             # 🎯 Ziel-Auswahl-Logik
-│   └── mouse_controller.py     # 🖱️ Maus-Steuerung & Smoothing
+├── core/                       # 🧠 Core modules
+│   ├── capture.py              # 📸 Screen capture (dxcam)
+│   ├── detector.py             # 🤖 YOLO object detection
+│   ├── selector.py             # 🎯 Target selection logic
+│   └── mouse_controller.py     # 🖱️ Mouse control & smoothing
 │
-├── gui/                        # 🎨 Grafische Oberfläche
+├── gui/                        # 🎨 Graphical interface
 │   └── main_window.py          # PyQt5 GUI
 │
-├── utils/                      # 🛠️ Hilfsfunktionen
-│   ├── hotkey_manager.py       # ⌨️ Hotkey-System (F6)
-│   ├── fps_counter.py          # 📊 Performance Monitoring
-│   └── window_selector.py      # 🪟 Fenster-Selektion
+├── utils/                      # 🛠️ Utility functions
+│   ├── hotkey_manager.py       # ⌨️ Hotkey system (F6)
+│   ├── fps_counter.py          # 📊 Performance monitoring
+│   └── window_selector.py      # 🪟 Window selection
 │
-├── models/                     # 🤖 KI-Modelle (YOLO)
-│   ├── yolov8n.pt              # Schnell (60+ FPS)
-│   ├── yolov8s.pt              # Ausgewogen ← AKTUELL GENUTZT
-│   └── yolov8m.pt              # Genau (bis 30 FPS)
+├── models/                     # 🤖 AI models (YOLO)
+│   ├── yolov8n.pt              # Fast (60+ FPS)
+│   ├── yolov8s.pt              # Balanced ← CURRENTLY USED
+│   └── yolov8m.pt              # Accurate (up to 30 FPS)
 │
-└── README.md                   # Diese Datei
+└── README.md                   # This file
 ```
 
----
+## 📄 What Does Each File Do?
 
-## 📄 Was macht jede Datei?
+**Main Programs**
+- `launcher.py` — Menu to launch CLI, GUI, or Window Selector
+- `main.py` — Core program (TrackingSystem class + configuration)
+- `gui_main.py` — Graphical interface with live preview
 
-### **Hauptprogramme**
-- **launcher.py** - Menü zum Starten von CLI, GUI oder Window-Selector
-- **main.py** - Kernprogramm (TrackingSystem Klasse + Konfiguration)
-- **gui_main.py** - Grafische Oberfläche mit Live-Vorschau
+**Configuration**
+- `config.py` — All adjustable parameters (model, GPU, auto-shoot, etc.)
+- `config_presets.py` — Preset configs (CSGO, Valorant, Balanced, etc.)
+- `requirements.txt` — Python packages (torch, ultralytics, opencv, etc.)
 
-### **Konfiguration**
-- **config.py** - Alle einstellbaren Parameter (Model, GPU, Auto-Shoot, etc.)
-- **config_presets.py** - Vorgefertigte Configs (CSGO, Valorant, Balanced, etc.)
-- **requirements.txt** - Python Pakete (torch, ultralytics, opencv, etc.)
+**Core Modules (the magic)**
+- `capture.py` — Takes screenshots (60–120 FPS possible)
+- `detector.py` — Detects players using YOLO (AI model)
+- `selector.py` — Selects the best target (closest to crosshair)
+- `mouse_controller.py` — Moves mouse smoothly + auto-click
 
-### **Core Module (die Magie)**
-- **capture.py** - Macht Screenshots (60-120 FPS möglich)
-- **detector.py** - Erkennt Personen mit YOLO (KI-Modell)
-- **selector.py** - Wählt das beste Ziel (nächstes zum Fadenkreuz)
-- **mouse_controller.py** - Bewegt Maus glatt + Auto-Click
+**Utilities**
+- `hotkey_manager.py` — F6 toggle listener
+- `fps_counter.py` — Displays performance (FPS) in console
+- `window_selector.py` — Window list for tracking
 
-### **Utilities**
-- **hotkey_manager.py** - F6 Toggle Listener
-- **fps_counter.py** - Zeigt Performance (FPS) in Console
-- **window_selector.py** - Fenster-Liste zum Tracking
+## ⚙️ Configuration
 
----
-
-## ⚙️ Konfiguration
-
-Alle Einstellungen in **config.py** (main.py → main() Funktion):
+All settings are in `config.py` (`main.py` → `main()` function):
 
 ```python
-# GPU (WICHTIG!)
+# GPU (IMPORTANT!)
 device="dml"                    # AMD RX 6750XT → "dml"
                                 # NVIDIA → "cuda"
                                 # CPU → "cpu"
 
-# Modell
-model_path="models/yolov8s.pt"  # n=schnell, s=ausgewogen, m=genau
+# Model
+model_path="models/yolov8s.pt"  # n=fast, s=balanced, m=accurate
 
-# Region (1920x1080 optimiert)
-capture_region=(0, 0, 1920, 950)  # Nur oberer Bereich (keine Waffe)
+# Region (optimized for 1920x1080)
+capture_region=(0, 0, 1920, 950)  # Upper area only (no weapon)
 
 # Tracking
-conf_threshold=0.5              # 0.0-1.0 (höher=genauer)
-smoothing_alpha=0.2             # 0.0=glatt, 1.0=zitternd
+conf_threshold=0.5              # 0.0–1.0 (higher = more accurate)
+smoothing_alpha=0.2             # 0.0=smooth, 1.0=jittery
 
 # Auto-Shoot
 auto_shoot=True
-shoot_threshold_px=30           # Nur schießen wenn nah genug
-shoot_cooldown_ms=80.0          # Minimale Zeit zwischen Schüssen
+shoot_threshold_px=30           # Only shoot if close enough
+shoot_cooldown_ms=80.0          # Minimum time between shots
 ```
 
----
+## 🎮 Usage
 
-## 🎮 Verwendung
-
-### **Option 1: CLI (Standard)**
+**Option 1: CLI (Default)**
 ```bash
 python launcher.py
-# Wähle: 1 (CLI Mode)
+# Choose: 1 (CLI Mode)
 ```
-- Schnell und leicht
-- F6 zum Aktivieren
-- Ctrl+C zum Beenden
+- Fast and lightweight
+- F6 to activate
+- Ctrl+C to quit
 
-### **Option 2: GUI**
+**Option 2: GUI**
 ```bash
 python launcher.py
-# Wähle: 2 (GUI Mode)
+# Choose: 2 (GUI Mode)
 ```
-- Vorschau + Live-Stats
-- Alle Parameter änderbar
-- Echtzeit-Detektionen sehen
+- Preview + live stats
+- All parameters adjustable
+- See detections in real time
 
-### **Option 3: Window-Selector**
+**Option 3: Window Selector**
 ```bash
 python launcher.py
-# Wähle: 3 (Window Selector)
+# Choose: 3 (Window Selector)
 ```
-- Fenster-Tracking
-- Nur Spiel-Fenster tracken
+- Window tracking
+- Track only the game window
 
----
+## 🔫 Auto-Shoot Tuning
 
-## 🔫 Auto-Shoot Einstellung
-
-**Zu aggressiv?** (schießt überall)
+**Too aggressive? (shoots everywhere)**
 ```python
-shoot_threshold_px=20   # War 30 (kleiner = seltener)
-conf_threshold=0.6      # War 0.5 (mehr Filter)
+shoot_threshold_px=20   # Was 30 (lower = less frequent)
+conf_threshold=0.6      # Was 0.5 (more filtering)
 ```
 
-**Zu schwach?** (schießt nicht genug)
+**Too weak? (not shooting enough)**
 ```python
-shoot_threshold_px=40   # War 30 (größer = öfter)
-conf_threshold=0.4      # War 0.5 (weniger Filter)
+shoot_threshold_px=40   # Was 30 (higher = more frequent)
+conf_threshold=0.4      # Was 0.5 (less filtering)
 ```
 
----
+## 📊 Expected FPS
 
-## 📊 FPS Erwartung
+With RX 6750XT + yolov8s + 1920×1080:
 
-Mit **RX 6750XT + yolov8s + 1920x1080**:
-- **Capture FPS:** 120 FPS
-- **Inference FPS:** 80-120 FPS
-- **Total System:** 80+ FPS realistisch
+| Component | Performance |
+|---|---|
+| Capture FPS | 120 FPS |
+| Inference FPS | 80–120 FPS |
+| Total System | 80+ FPS realistic |
 
----
+## 🔧 Common Issues
 
-## 🔧 Häufige Probleme
-
-**Problem: "Module nicht gefunden"**
+**"Module not found"**
 ```bash
 pip install -r requirements.txt
 ```
 
-**Problem: "GPU wird nicht erkannt"**
+**"GPU not recognized"**
 ```python
 # In config.py: device="cpu"
 ```
 
-**Problem: "Hotkey funktioniert nicht"**
-- Starte als Administrator
-- Oder nutze Ctrl+C zum Beenden
+**"Hotkey not working"**
+- Run as Administrator
+- Or use Ctrl+C to quit
 
-**Problem: "Schießt überall hin"**
-→ Siehe "Auto-Shoot Einstellung" oben
+**"Shoots everywhere"** → See "Auto-Shoot Tuning" above
 
----
+## 🎯 Performance Tips
 
-## 🎯 Performance-Tipps
+**If too slow:**
+- Use a smaller model: `yolov8n.pt`
+- Lower FPS target: `target_fps=60`
+- Reduce capture region (partial screen)
 
-**Wenn zu langsam:**
-- Modell kleiner: `yolov8n.pt`
-- FPS senken: `target_fps=60`
-- Region kleiner (Teil des Screens)
-
-**Wenn Latenz hoch:**
-- GPU-Modus prüfen: `device="dml"`
-- Smoothing erhöhen: `smoothing_alpha=0.3`
-
----
+**If latency is high:**
+- Check GPU mode: `device="dml"`
+- Increase smoothing: `smoothing_alpha=0.3`
 
 ## 💡 Hotkeys
 
-| Taste | Funktion |
-|-------|----------|
-| F6 | Tracking an/aus |
-| Ctrl+C | Programm beenden |
-
----
+| Key | Function |
+|---|---|
+| F6 | Toggle tracking on/off |
+| Ctrl+C | Quit program |
 
 ## 📦 Installation
 
 ```bash
-# Abhängigkeiten einmalig installieren
+# Install dependencies (one-time)
 pip install -r requirements.txt
 
-# YOLO Model wird beim ersten Start automatisch heruntergeladen
-# Falls nicht, lade manuell mit:
+# YOLO model downloads automatically on first run
+# If not, download manually with:
 python -c "from ultralytics import YOLO; YOLO('yolov8s.pt')"
 ```
 
----
+## ⚠️ Disclaimer
 
-## ⚠️ Wichtig
+- For educational purposes & testing only
+- Do not use in competitive online games (VAC ban risk)
+- Respect local laws and terms of service
+- Use F6 to quickly disable
 
-- **Nur für Bildungszwecke & Tests nutzen**
-- Nicht in kompetitiven Online-Spielen (VAC-Ban Risiko)
-- Lokale Gesetze / Nutzungsbedingungen beachten
-- F6 zum schnellen Deaktivieren
-
----
-
-**Viel Erfolg! 🎯**
+Good luck! 🎯
